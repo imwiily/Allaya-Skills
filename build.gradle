@@ -2,18 +2,30 @@ plugins {
     id 'java'
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+group = 'com.allaya'
+version = '1.0'
+
+def paperVersion = '1.21.4-R0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    compileOnly "io.papermc.paper:paper-api:$paperVersion"
+    compileOnly "me.clip:placeholderapi:2.11.5"
+    implementation 'com.zaxxer:HikariCP:5.1.0'
+    implementation 'org.xerial:sqlite-jdbc:3.43.2.2'
 }
 
-test {
-    useJUnitPlatform()
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.allaya.skills.AllayaSkills'
+    }
 }

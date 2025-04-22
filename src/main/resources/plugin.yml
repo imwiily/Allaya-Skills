@@ -1,0 +1,16 @@
+name: Allaya-Skills
+version: 1.0
+main: com.allaya.skills.AllayaSkills
+author: Allaya Studios
+description: Sistema modular de skills com XP e níveis para Minecraft.
+api-version: 1.21
+soft-depend: [PlaceholderAPI]
+commands:
+  skills:
+    description: Abre o menu de skills ou recarrega o plugin.
+    usage: /<command>
+    aliases: [habilidades]
+permissions:
+  allayaskills.admin:
+    description: Permite recarregar o plugin.
+    default: op

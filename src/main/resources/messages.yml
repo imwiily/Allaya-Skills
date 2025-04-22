@@ -1,0 +1,5 @@
+prefix: "&6[Skills] &r"
+reload-success: "%prefix% &aAs configurações foram recarregadas com sucesso."
+no-permission: "%prefix% &cVocê não tem permissão para isso."
+xp-gain: "%prefix% &aVocê ganhou &e%xp% XP &ana skill &b%skill%&a."
+level-up: "%prefix% &aVocê subiu para o nível &e%level% &ana skill &b%skill%&a!"
