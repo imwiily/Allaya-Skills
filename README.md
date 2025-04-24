@@ -1,187 +1,153 @@
 # 🧠 AllayaSkills
-
-> Um sistema completo de **habilidades passivas evolutivas**, feito para servidores PvP e PvE no Minecraft 1.21.4.  
-> Com caminhos de progressão, árvore de skills, armazenamento em SQLite e suporte a regiões do WorldGuard.
-
----
+Um sistema completo de habilidades passivas evolutivas, feito para servidores PvP e PvE no Minecraft 1.21.4.
 
 ## ✨ Funcionalidades
-
 - 🌿 Árvore de habilidades passivas desbloqueáveis com pontos
-- 🛣️ Caminhos evolutivos (ex: `combate`, `mineracao`)
+- 🛣️ Caminhos evolutivos configuráveis (ex: combate, mineração)
 - ⛏️ XP baseado em ações (matar, minerar, etc)
-- 🔐 Limitações configuráveis por:
-    - Região (WorldGuard)
-    - Mundo
-    - Ferramenta usada
-    - Permissão
-    - Chance de ativação
-- 🧠 Sistema de pontos por nível alcançado
-- 💾 Banco de dados local via SQLite
-- 🧩 Placeholders integrados com PlaceholderAPI
-- 📦 GUI customizável via YAML (estilo CommandPanels, sem dependências externas)
+- 🔐 Limitações por região (WorldGuard), mundo, ferramenta, permissão, chance
+- 🧠 Sistema de pontos por nível
+- 📀 Armazenamento local com SQLite
+- 🔹 Placeholders integrados (PlaceholderAPI)
+- 📆 GUI customizável estilo CommandPanels, via YAML
+- 📆 BossBar de progresso configurável e integrada por path
 
----
+## 📁 Requisitos
+- Minecraft 1.21.4
+- Java 21
+- Recomendado: WorldGuard, PlaceholderAPI
 
-## 🧱 Requisitos
-
-- Minecraft `1.21.4`
-- Java `21`
-- Plugins recomendados:
-    - [WorldGuard](https://enginehub.org/worldguard/)
-    - [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)
-
----
-
-## 📂 Exemplo de `paths.yml`
-
+## 📂 Exemplos de Arquivos
+### `paths/mineracao.yml`
 ```yaml
-paths:
-  combate:
-    display-name: "Caminho do Combate"
-    xp-source: PLAYER_KILL
-    xp-per-event: 10
-    starting-xp: 100
-    xp-increase-per-level: 50
-    points-per-level: 1
-
-  mineracao:
-    display-name: "Caminho da Mineração"
-    xp-source: BLOCK_BREAK
-    xp-per-event: 5
-    starting-xp: 80
-    xp-increase-per-level: 40
-    points-per-level: 1
-    xp-blocks:
-      STONE: 1
-      COAL_ORE: 3
-      IRON_ORE: 5
-      GOLD_ORE: 6
-      DIAMOND_ORE: 10
-      NETHERITE_ORE: 15
+display-name: "Caminho da Mineração"
+xp-source: BLOCK_BREAK
+xp-per-event: 10
+starting-xp: 100
+xp-increase-per-level: 50
+points-per-level: 1
+block-xp:
+  DIAMOND_ORE: 30
+  IRON_ORE: 10
+  STONE: 1
 ```
 
----
-
-## 📘 Exemplo de skills.yml
-
+### `skills/maos_rapidas.yml`
 ```yaml
-maos_rapidas:
-  name: "Mãos Rápidas"
-  description: "Aumenta a velocidade de mineração em 10%."
-  path: "mineracao"
-  unlock_level: 0
-  skill-points-required: 1
-  requires: []
-  region-allowed: []
-  cooldown: 0
-  effects:
-    - trigger: PASSIVE_TICK
-      effect: POTION_EFFECT
-      type: FAST_DIGGING
-      amplifier: 0
-      duration: 40
-
-sorte_minerador:
-  name: "Sorte dos Mineradores"
-  description: "25% de chance de dropar o minério duas vezes."
-  path: "mineracao"
-  unlock_level: 1
-  skill-points-required: 2
-  requires:
-    - maos_rapidas
-  region-allowed: []
-  cooldown: 0
-  effects:
-    - trigger: BLOCK_BREAK
-      effect: DOUBLE_DROP
-      chance: 0.25
-      blocks:
-        - COAL_ORE
-        - IRON_ORE
-        - GOLD_ORE
-        - DIAMOND_ORE
-        - NETHERITE_ORE
-
-mineracao_explosiva:
-  name: "Mineração Explosiva"
-  description: "Quebra uma área de 3x3 ao minerar minérios (10s de cooldown)."
-  path: "mineracao"
-  unlock_level: 2
-  skill-points-required: 2
-  requires:
-    - maos_rapidas
-  region-allowed:
-    - mina_normal
-    - mina_vip
-  cooldown: 10
-  required-permission: "skills.use.mineracao_explosiva"
-  effects:
-    - trigger: BLOCK_BREAK
-      effect: AREA_BREAK
-      radius: 1
-      shape: CUBE
-      chance: 0.5
-      condition:
-        blocks:
-          - COAL_ORE
-          - IRON_ORE
-          - GOLD_ORE
-          - DIAMOND_ORE
-          - NETHERITE_ORE
-        tools:
-          - IRON_PICKAXE
-          - DIAMOND_PICKAXE
-        worlds:
-          - minas
+name: "Mãos Rápidas"
+description: "+10% velocidade"
+path: "mineracao"
+unlock_level: 0
+skill-points-required: 1
+requires: []
+region-allowed: []
+cooldown: 0
+effects:
+  - trigger: PASSIVE_TICK
+    effect: POTION_EFFECT
+    type: FAST_DIGGING
+    amplifier: 0
+    duration: 40
 ```
 
----
-
-## 🖥️ Comandos
-
+### `menus/main.yml`
 ```yaml
-/skills                                     - Abre o menu de caminhos
-/skills open <caminho>                      - Abre diretamente a árvore do caminho
-/skills invest <skill-id>                   - Tenta desbloquear uma skill
-/skills points                              - Mostra pontos disponíveis
-/skills info <jogador>                      - Mostra progresso de outro jogador
-/skills givexp <jogador> <path> <qtd>       - Adiciona XP (admin)
-/skills givepoints <jogador> <path> <qtd>   - Adiciona pontos (admin)
-/skills reset <jogador> <path|all>          - Reseta progresso (admin)
+title: "Menu Principal"
+rows: 3
 
+items:
+  skills:
+    slot: 11
+    material: ENCHANTED_BOOK
+    name: "&bÁrvore de Habilidades"
+    lore:
+      - "&7Visualize e desbloqueie skills!"
+    open-menu: "mine-skills"
+
+  stats:
+    slot: 15
+    material: PAPER
+    name: "&aEstatísticas"
+    lore:
+      - "&7Veja seu progresso e nível"
+    open-menu: "stats"
 ```
 
----
+### `menus/mine-skill.yml`
+```yaml
+title: "Árvore: Mineração"
+rows: 4
+
+items:
+  maos_rapidas:
+    slot: 10
+    type: "skill"
+    locked:
+      material: RED_STAINED_GLASS_PANE
+      name: "&aMãos Rápidas"
+      lore:
+        - "&7+10% velocidade de mineração"
+        - "&aCusto: 1 Ponto de habilidade."
+        - "&aSeus pontos: %points_mineracao%"
+      unlock-skill: "maos_rapidas"
+    unlocked:
+      material: LIME_STAINED_GLASS_PANE
+      name: "&aMãos Rápidas"
+      lore:
+        - "&7+10% velocidade de mineração"
+  super_toque:
+    slot: 13
+    type: "skill"
+    locked:
+      material: RED_STAINED_GLASS_PANE
+      name: "&bSuper Toque"
+      lore:
+        - "&7Minérios dropam automaticamente"
+        - "&aCusto: 1 Ponto de habilidade."
+        - "&aSeus pontos: %points_mineracao%"
+      unlock-skill: "super_toque"
+    unlocked:
+      material: LIME_STAINED_GLASS_PANE
+      name: "&bSuper Toque"
+      lore:
+        - "&7Minérios dropam automaticamente"
+  voltar:
+    slot: 31
+    type: "static"
+    material: BARRIER
+    name: "&cVoltar"
+    lore:
+      - "&7Retornar ao menu principal"
+    back: true
+```
+
+## 📅 Comandos
+```
+/skills                         - Abre o menu principal
+/skills open <path>            - Abre uma árvore diretamente
+/skills invest <skill-id>      - Desbloqueia skill
+/skills points                 - Mostra pontos disponíveis
+/skills info <jogador>         - Progresso de outro jogador
+/skills givexp <jogador> <caminho> <qtd>   - XP admin
+/skills givepoints <jogador> <caminho> <qtd> - Pontos admin
+/skills reset <jogador> <path|all>         - Resetar progresso
+```
 
 ## 🔐 Permissões
+- `skilltree.use` - Acessar menus e sistema
+- `skilltree.admin` - Comandos administrativos
+- `skilltree.reset.self` - Resetar próprio progresso
+- `skilltree.view.self` - Ver progresso pessoal
 
-```yaml
-skilltree.use                  - Usar o sistema de skills
-skilltree.admin                - Acesso a comandos administrativos
-skilltree.reset.self           - Permite resetar o próprio progresso
-skilltree.view.self            - Ver seu próprio progresso detalhado
-```
+## 🔹 Placeholders (PAPI)
+- `%allayaskills_level_<path>%`
+- `%allayaskills_xp_<path>%`
+- `%allayaskills_nextxp_<path>%`
+- `%allayaskills_points_<path>%`
+- `%allayaskills_has_skill_<id>%`
 
----
-
-## 🧩 Placeholders (PlaceholderAPI)
-
-```yaml
-%allayaskills_level_<path>%         - Nível no caminho
-%allayaskills_xp_<path>%            - XP atual
-%allayaskills_xp_needed_<path>%     - XP necessário pro próximo nível
-%allayaskills_points_<path>%        - Pontos disponíveis
-%allayaskills_has_skill_<id>%       - true/false se o jogador tem a skill
-
-```
-
----
-
-## 💾 Banco de Dados (SQLite)
-
+## 📃 Banco de Dados
 ```sql
--- Progresso por caminho
 CREATE TABLE player_skills (
   uuid TEXT NOT NULL,
   path TEXT NOT NULL,
@@ -193,7 +159,6 @@ CREATE TABLE player_skills (
   PRIMARY KEY (uuid, path)
 );
 
--- Habilidades desbloqueadas
 CREATE TABLE player_unlocked_skills (
   uuid TEXT NOT NULL,
   skill_id TEXT NOT NULL,
@@ -202,38 +167,34 @@ CREATE TABLE player_unlocked_skills (
 );
 ```
 
----
-
-## 📦 Estrutura do Plugin
-
-```arduino
+## 📆 Estrutura
+```
 AllayaSkills/
 ├── config.yml
-├── skills.yml
-├── paths.yml
-├── gui-combate.yml
-├── gui-mineracao.yml
+├── messages.yml
+├── skills/
+│   ├── maos_rapidas.yml
+│   ├── super_toque.yml
+├── paths/
+│   └── mineracao.yml
+├── menus/
+│   ├── main.yml
+│   ├── mine-skill.yml
+│   └── stats.yml
 ├── database.db
-
 ```
 
-## ✅ Futuras Funcionalidades Planejadas
+## ✅ Futuro
+- Especializações: Gladiador, Arqueiro, Guardião
+- Skills ativas com cooldown
+- Ranking: `/skills top <path>`
+- Integração com MySQL
+- Recompensas por nível (titles, sons, partículas)
+- Eventos de XP dobrado por tempo
 
-- [ ] Especializações (ex: Gladiador, Guardião)
-- [ ] Skills ativas com cooldown
-- [ ] Comando de ranking: `/skills top <path>`
-- [ ] Integração com MySQL (opcional ao SQLite)
-- [ ] Sistema de recompensas visuais por nível (title, sound, partículas)
-- [ ] Eventos temporários de XP (ex: double XP por tempo limitado)
-
----
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Envie um pull request com melhorias, novas skills, ou integrações.
-
----
+## 🤝 Contribua
+Pull requests são bem-vindos! Melhore funcionalidades, envie novas skills ou integrações.
 
 ## 📜 Licença
+MIT License.
 
-Este projeto está licenciado sob a MIT License.
