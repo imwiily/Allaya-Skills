@@ -25,7 +25,9 @@ public class SkillsCommand implements CommandExecutor {
         }
 
         if (sender instanceof Player player) {
-            MenuGUI.open(player, "skills");
+            String mainMenu = AllayaSkills.getInstance().getConfig().getString("main-menu", "skills");
+            MenuGUI.open(player, mainMenu);
+
         } else {
             sender.sendMessage("Este comando só pode ser usado por jogadores.");
         }

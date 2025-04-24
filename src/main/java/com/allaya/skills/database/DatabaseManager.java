@@ -1,4 +1,4 @@
-package com.allaya.skills.managers;
+package com.allaya.skills.database;
 
 import com.allaya.skills.AllayaSkills;
 

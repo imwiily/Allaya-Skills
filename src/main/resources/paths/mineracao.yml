@@ -1,0 +1,10 @@
+display-name: "Caminho da Mineração"
+xp-source: BLOCK_BREAK
+xp-per-event: 10
+starting-xp: 100
+xp-increase-per-level: 50
+points-per-level: 1
+block-xp:
+  DIAMOND_ORE: 30
+  IRON_ORE: 10
+  STONE: 1

@@ -1,0 +1,9 @@
+name: "Super Toque"
+description: "Dropa automaticamente"
+path: "mineracao"
+unlock_level: 1
+skill-points-required: 1
+requires: ["maos_rapidas"]
+region-allowed: []
+cooldown: 0
+effects: []

@@ -1,8 +1,8 @@
 package com.allaya.skills.managers;
 
 import com.allaya.skills.AllayaSkills;
+import com.allaya.skills.database.DatabaseManager;
 import com.allaya.skills.utils.MessageUtils;
-
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class SkillManager {
+public class SkillXPManager {
 
     public static int getXP(UUID uuid, String skill) {
         try (Connection conn = DatabaseManager.getConnection();
@@ -26,7 +26,6 @@ public class SkillManager {
             return 0;
         }
     }
-
 
     public static int getLevel(UUID uuid, String skill) {
         try (Connection conn = DatabaseManager.getConnection();
@@ -74,10 +73,6 @@ public class SkillManager {
         }
     }
 
-    private static String capitalize(String s) {
-        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
-    }
-
     public static void setLevel(UUID uuid, String skill, int level) {
         saveSkill(uuid, skill, getXP(uuid, skill), level);
     }
@@ -94,5 +89,9 @@ public class SkillManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String capitalize(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 }

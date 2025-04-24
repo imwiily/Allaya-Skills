@@ -1,0 +1,44 @@
+title: "Árvore: Mineração"
+rows: 4
+
+items:
+  maos_rapidas:
+    slot: 10
+    type: "skill"
+    locked:
+      material: RED_STAINED_GLASS_PANE
+      name: "&aMãos Rápidas"
+      lore:
+        - "&7+10% velocidade de mineração"
+        - "&aCusto: 1 Ponto de habilidade."
+        - "&aSeus pontos: %points_mineracao%"
+      unlock-skill: "maos_rapidas"
+    unlocked:
+      material: LIME_STAINED_GLASS_PANE
+      name: "&aMãos Rápidas"
+      lore:
+        - "&7+10% velocidade de mineração"
+  super_toque:
+    slot: 13
+    type: "skill"
+    locked:
+      material: RED_STAINED_GLASS_PANE
+      name: "&bSuper Toque"
+      lore:
+        - "&7Minérios dropam automaticamente"
+        - "&aCusto: 1 Ponto de habilidade."
+        - "&aSeus pontos: %points_mineracao%"
+      unlock-skill: "super_toque"
+    unlocked:
+      material: LIME_STAINED_GLASS_PANE
+      name: "&bSuper Toque"
+      lore:
+        - "&7Minérios dropam automaticamente"
+  voltar:
+    slot: 31
+    type: "static"
+    material: BARRIER
+    name: "&cVoltar"
+    lore:
+      - "&7Retornar ao menu principal"
+    back: true

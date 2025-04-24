@@ -1,0 +1,28 @@
+title: "Estatísticas"
+rows: 3
+
+items:
+  nivel_geral:
+    slot: 12
+    material: EXPERIENCE_BOTTLE
+    name: "&eNível: Caminho Mineração"
+    lore:
+      - "&7Seu nível atual em Mineração"
+      - "&fLevel: %level_mineracao%"
+      - "&fXP: %xp_mineracao% / %nextxp_mineracao%"
+
+  progresso:
+    slot: 14
+    material: BOOK
+    name: "&6Progresso"
+    lore:
+      - "&7Pontos de habilidade disponíveis:"
+      - "&f%points_mineracao%"
+
+  voltar:
+    slot: 22
+    material: BARRIER
+    name: "&cVoltar"
+    lore:
+      - "&7Retornar ao menu principal"
+    back: true

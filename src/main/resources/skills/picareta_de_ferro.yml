@@ -1,0 +1,9 @@
+name: "Picareta de Ferro"
+description: "Inicia com item especial"
+path: "mineracao"
+unlock_level: 2
+skill-points-required: 1
+requires: ["super_toque"]
+region-allowed: []
+cooldown: 0
+effects: []

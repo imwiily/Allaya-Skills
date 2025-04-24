@@ -1,0 +1,19 @@
+title: "Menu Principal"
+rows: 3
+
+items:
+  skills:
+    slot: 11
+    material: ENCHANTED_BOOK
+    name: "&bÁrvore de Habilidades"
+    lore:
+      - "&7Visualize e desbloqueie skills!"
+    open-menu: "mine-skills"
+
+  stats:
+    slot: 15
+    material: PAPER
+    name: "&aEstatísticas"
+    lore:
+      - "&7Veja seu progresso e nível"
+    open-menu: "stats"

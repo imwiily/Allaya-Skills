@@ -1,0 +1,14 @@
+name: "Mãos Rápidas"
+description: "+10% velocidade"
+path: "mineracao"
+unlock_level: 0
+skill-points-required: 1
+requires: []
+region-allowed: []
+cooldown: 0
+effects:
+  - trigger: PASSIVE_TICK
+    effect: POTION_EFFECT
+    type: FAST_DIGGING
+    amplifier: 0
+    duration: 40
